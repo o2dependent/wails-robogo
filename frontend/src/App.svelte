@@ -1,7 +1,7 @@
 <script lang="ts">
 	import logo from "./assets/images/logo-universal.png";
 	import { Greet, HoldKey } from "../wailsjs/go/main/App.js";
-	import { EventsEmit } from "../wailsjs/runtime/runtime";
+	import { EventsEmit, EventsOn } from "../wailsjs/runtime/runtime";
 	import { onMount } from "svelte";
 
 	let resultText: string = "Please enter your name below 👇";
@@ -10,9 +10,22 @@
 	let isCapturing: boolean = false;
 	let capturedKey: string | null = null;
 
+	let isBouncing = false;
+
 	function greet(): void {
 		Greet(name).then((result) => (resultText = result));
 	}
+
+	const startBounce = () => {
+		EventsEmit("bounce");
+		isBouncing = true;
+	};
+
+	onMount(() => {
+		EventsOn("bounce_end", () => {
+			isBouncing = false;
+		});
+	});
 
 	const captureKey = (e: KeyboardEvent) => {
 		capturedKey = e.key;
@@ -47,16 +60,13 @@
 				Start key capture
 			</button>
 		{/if}
-		<button on:click={() => EventsEmit("key_pressed", "a")} type="button">
-			emit
-		</button>
-		<textarea
-			on:click={() => EventsEmit("key_pressed", "a")}
-			name="threepeat"
-			id="threepeat"
-			cols="30"
-			rows="10"
-		/>
+		<div>
+			{#if isBouncing}
+				<h1>Press <kbd>esc</kbd> to end bounce.</h1>
+			{:else}
+				<button on:click={startBounce} type="button">Start Bounce</button>
+			{/if}
+		</div>
 	</div>
 </main>
 

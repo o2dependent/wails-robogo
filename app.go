@@ -37,7 +37,7 @@ var isBouncing = false
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
-	runtime.EventsOn(ctx, "key_pressed", func(data ...interface{}) {
+	runtime.EventsOn(ctx, "bounce", func(data ...interface{}) {
 		fmt.Println("key pressed", data)
 		// robotgo.TypeStr("Hello Worldzzz")
 		isBouncing = true
@@ -60,7 +60,7 @@ func (a *App) startup(ctx context.Context) {
 			}
 			robotgo.MoveSmooth(x+dirX, y+dirY)
 			if !isBouncing {
-				fmt.Println("stop bounce")
+				runtime.EventsEmit(ctx, "bounce_end")
 				break
 			}
 		}
