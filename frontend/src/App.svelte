@@ -43,11 +43,11 @@
 <main>
 	<div>
 		{#if isCapturing}
-			<button on:click={holdKey} type="button">
+			<button class="btn" on:click={holdKey} type="button">
 				Hold <kbd>{capturedKey ?? "<NONE_ENTERED>"}</kbd>
 			</button>
 		{:else}
-			<button on:click={() => (isCapturing = true)} type="button">
+			<button class="btn" on:click={() => (isCapturing = true)} type="button">
 				Start key capture
 			</button>
 		{/if}
@@ -55,7 +55,9 @@
 			{#if isBouncing}
 				<h1>Press <kbd>esc</kbd> to end bounce.</h1>
 			{:else}
-				<button on:click={startBounce} type="button">Start Bounce</button>
+				<button class="btn" on:click={startBounce} type="button"
+					>Start Bounce</button
+				>
 			{/if}
 		</div>
 	</div>
