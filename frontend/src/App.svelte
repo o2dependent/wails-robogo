@@ -3,6 +3,8 @@
 	import { Greet, HoldKey } from "../wailsjs/go/main/App.js";
 	import { EventsEmit, EventsOn } from "../wailsjs/runtime/runtime";
 	import { onMount } from "svelte";
+	import Sidebar from "./lib/Sidebar.svelte";
+	import Router from "./Router.svelte";
 
 	let isCapturing: boolean = false;
 	let capturedKey: string | null = null;
@@ -40,25 +42,7 @@
 	}
 </script>
 
-<main>
-	<div>
-		{#if isCapturing}
-			<button class="btn" on:click={holdKey} type="button">
-				Hold <kbd>{capturedKey ?? "<NONE_ENTERED>"}</kbd>
-			</button>
-		{:else}
-			<button class="btn" on:click={() => (isCapturing = true)} type="button">
-				Start key capture
-			</button>
-		{/if}
-		<div>
-			{#if isBouncing}
-				<h1>Press <kbd>esc</kbd> to end bounce.</h1>
-			{:else}
-				<button class="btn" on:click={startBounce} type="button"
-					>Start Bounce</button
-				>
-			{/if}
-		</div>
-	</div>
-</main>
+<div class="flex h-full">
+	<Sidebar />
+	<Router />
+</div>
