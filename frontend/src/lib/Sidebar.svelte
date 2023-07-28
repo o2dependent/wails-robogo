@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Icon from "src/lib/Icon/Icon.svelte";
+	import Icon from "./Icon/Icon.svelte";
 
 	let search = "";
 	let pinnedCommands: {
@@ -9,7 +9,7 @@
 	}[] = [];
 </script>
 
-<aside class="flex flex-col gap-2.5 py-4 px-3 w-56">
+<aside class="flex flex-col gap-2.5 py-4 px-3 w-56 h-full">
 	<input
 		bind:value={search}
 		type="Search..."
