@@ -1,8 +1,20 @@
 <script lang="ts">
-	import { EventsEmit } from "wailsjs/runtime/runtime";
+	import { onMount } from "svelte";
+	import {
+		EventsEmit,
+		EventsOff,
+		EventsOn,
+	} from "../../wailsjs/runtime/runtime";
 
 	let isBouncing = false;
-
+	onMount(() => {
+		EventsOn("bounce_end", () => {
+			isBouncing = false;
+		});
+		return () => {
+			EventsOff("bounce_end");
+		};
+	});
 	const startBounce = () => {
 		EventsEmit("bounce");
 		isBouncing = true;
